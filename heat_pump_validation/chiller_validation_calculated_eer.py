@@ -24,7 +24,7 @@ plt.ylabel('EER')
 plt.plot(temphub_list, EER_OG_list, linestyle = '', marker = '.')
 plt.legend(['QG 0,3'], loc= 'upper right')
 
-# manually set plot, 923:4066 EER under 8
+# manually set plot, Index 923:4066 (if EER is under 8)
 plt.plot(temphub_list[923:4066], EER_OG_list[923:4066], label = 'EER', linestyle = '', marker = '.')
 plt.legend(['QG 0,3'], loc= 'upper right')
 plt.show()
