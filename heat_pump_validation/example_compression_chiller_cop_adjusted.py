@@ -8,28 +8,32 @@ output is a list as well and may serve as input (conversion_factor) for a
 oemof.solph.transformer.
 """
 
-import src.oemof.thermal.compression_heatpumps_and_chillers as cmpr_hp_chiller
+import compression_heatpumps_and_chillers as cmpr_hp_chiller
 import pandas as pd
+import os
 
-datalogger = pd.read_csv(r'C:\git\data\20190711_TempControl_COOLING_SP18_Datalogger.csv')
-data_t_high = datalogger['T_ext_IN']
-data_t_low = datalogger['T_int_OUT']
+datalogger = pd.read_csv(os.path.join(os.path.dirname(__file__),
+                                      'data/20190711_TempControl_COOLING_SP18_Datalogger.csv'))
+datalogger.set_index('Time', inplace=True)
+data_t_high = datalogger['T_ext_IN'].loc['07/11/2019 09:32:59:415' : '07/11/2019 14:18:26:885']
+data_t_low = datalogger['T_int_IN'].loc['07/11/2019 09:32:59:415' : '07/11/2019 14:18:26:885']
 
 data_t_high_list = data_t_high.values.tolist()
 data_t_low_list = data_t_low.values.tolist()
 
+eer_df = pd.DataFrame()
+for qg in [0.2, 0.3, 0.35, 0.4, 0.45, 0.5]:
+    cops_chiller = cmpr_hp_chiller.calc_cops(t_high= data_t_high_list,
+                                             t_low= data_t_low_list,
+                                             quality_grade=qg,
+                                             mode='chiller')
+    df = pd.DataFrame(cops_chiller,
+                      columns=['EER_{}'.format(''.join(str(qg).split('.')))],
+                      index=data_t_high.index)
+    eer_df = pd.concat([eer_df, df], axis=1)
 
-
-cops_chiller = cmpr_hp_chiller.calc_cops(t_high= data_t_high_list,
-                                         t_low= data_t_low_list,
-                                         quality_grade=0.3,
-                                         mode='chiller')
-dataseries = pd.DataFrame(cops_chiller)
-
-dataseries.to_csv(r'C:\git\data\20190711\EER_03.csv', decimal='.')
+eer_df.to_csv(os.path.join(os.path.dirname(__file__), 'data/eers.csv'), decimal='.')
 
 print("")
 print("Coefficients of Performance (COP): ", *cops_chiller, sep='\n')
 print("")
-
-
