@@ -16,7 +16,7 @@ datalogger = pd.read_csv(os.path.join(os.path.dirname(__file__),
                                       'data/20190711_TempControl_COOLING_SP18_Datalogger.csv'))
 datalogger.set_index('Time', inplace=True)
 data_t_high = datalogger['T_ext_IN'].loc['07/11/2019 09:32:59:415' : '07/11/2019 14:18:26:885']
-data_t_low = datalogger['T_int_IN'].loc['07/11/2019 09:32:59:415' : '07/11/2019 14:18:26:885']
+data_t_low = datalogger['Tint_IN'].loc['07/11/2019 09:32:59:415' : '07/11/2019 14:18:26:885']
 
 data_t_high_list = data_t_high.values.tolist()
 data_t_low_list = data_t_low.values.tolist()
