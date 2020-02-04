@@ -2,12 +2,12 @@ import pandas as pd
 import numpy as np
 
 ''''
-In this .py EER/COP were calculated first. After that the time was resampled.
-EER_03: Calculated EER with quality grade 0,3, T_ext_in and T_int_OUT
+Temphub calculation
+* Input: calculated EER/COP, Time from original data
+* validation_data: measured EER
 '''
 
 
-# calc temphub
 def temphub(t_high_series, t_low_series):
     t_high_list = t_high_series.values.tolist()
     t_low_list = t_low_series.values.tolist()
@@ -29,7 +29,7 @@ time_data['Time'] = pd.to_datetime(time_data['Time'])
 temphub = temphub(time_data['T_ext'], time_data['T_air '])  # calc temphub
 validation_series = validation_data['COP']
 
-# resample every 30 minutes / 1 hour and concatenated with temphub and
+# resample every 30 minutes / 1 hour and concatenated with temphub and COP/EER
 data = pd.concat([time_data['Time'], EER_data, temphub, validation_series], axis=1,
                  names=['Time', 'COP']).set_index('Time')
 data_nan = data.replace(0, np.nan).dropna()
