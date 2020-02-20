@@ -2,32 +2,37 @@ import pandas as pd
 import matplotlib.pyplot as plt
 from sklearn.linear_model import LinearRegression
 
-'''all_dif = alle Differenzen der gemessenen - berechneten EER
-    data_EER = alle EER (gemessen, berechnet)
+'''
+simulation_data = {DataFrame}
+validation_series = {Series}
     '''
 
-
-eer_data = pd.read_csv(r'C:\git\data\20190711\Drop_nan.csv')
-validation_series = pd.read_csv(r'C:\git\data\20190711\Histogram_data_all.csv')
 def plt_linear_regression(simulation_data, validation_series):
     for sim_name in simulation_data:
-        x =simulation_data[sim_name].values.reshape(-1, 1)
-        y = validation_series.values.reshape(-1, 1)
+        y =simulation_data[sim_name].values.reshape(-1, 1)
+        x = validation_series.values.reshape(-1, 1)
 
-        linear_regressor = LinearRegression().fit(x, y)
-        plt.scatter(x, y, facecolors='none', edgecolors='green')
-        plt.title('Correlation of calculated EER to measured EER')
+        linear_regressor = LinearRegression().fit(y, x)
+        plt.scatter(y, x, facecolors='none', edgecolors='green')
+        plt.title('Correlation of measured COP to calculated COP')
 
         plt.xlim([0, 12])
         plt.ylim([0, 12])
-        plt.xlabel('EER QG {}'.format(sim_name.split('_')[1]))
-        plt.ylabel('EER')
+        plt.xlabel('{} QG 0,{}'.format(sim_name.split('_')[0], sim_name.split('_')[1]))
+        plt.ylabel('EER'.format(sim_name.split('_')[0]))
+        #plt.plot([-1.513911, 3.922473], [-1.513911, 3.922473], color='red')
         plt.plot([0, 12], [0, 12], color='red')
-        #plt.savefig(r'Z:\05_Temp\Stefanie\chiller_validation\20190711\Correlation\03.png')
+        #plt.savefig(r'C:\git\data\PV_Chiller_COOLING\20190711\calc_EER_Tint_IN\Temphub_Tint_IN\Correlation_{}.png'.format(sim_name))
         plt.show()
 
     return linear_regressor
+data = pd.concat([pd.read_csv(r'file:///C:\git\data\PV_Chiller_COOLING\20190711\calc_EER_Tint_IN\resampled_25.csv')],
+                 axis=0, ignore_index=True)
 
-plt_linear_regression(simulation_data=,
-                      validation_series=)
+validation_series = data['EER']
+simulation_data= data[['EER_25']]
+#simulation_data =data.iloc[:, 1:6]
+plt_linear_regression(simulation_data=simulation_data,
+                      validation_series=validation_series)
+
 
