@@ -1,6 +1,10 @@
 import pandas as pd
 import numpy as np
 
+''' 
+Calculates COP or EER 
+Corrections were made to avoid ZeroDivisionError'''
+
 def calc_cops(t_high, t_low, quality_grade,
               consider_icing=False, factor_icing=None, mode=None):
     length = max([len(t_high), len(t_low)])
