@@ -21,16 +21,18 @@ def plt_linear_regression(simulation_data, validation_series):
         plt.xlabel('COP QG 0,{}'.format(sim_name.split('_')[1]))
         plt.ylabel('COP')
         plt.plot([0, 12], [0, 12], color='red')
-        #plt.savefig(r'C:\git\data\PV_HeatPump_HEATING\calc_cop_Tint_OUT\20190301_Tint_OUT_Temphub_T_air\Correlation_{}.png'.format(sim_name))
+        plt.savefig(r'C:\git\data\temperature_resampled\calc_EER_Tint_OUT\Correlation_{}.png'.format(sim_name))
         plt.show()
 
     return linear_regressor
-data = pd.concat([pd.read_csv(r'file:///C:\git\data\PV_HeatPump_HEATING\calc_cop_Tint_OUT\20190301_Tint_OUT_Temphub_T_air\20190301_all_data.csv')],
-                  #pd.read_csv(r'file:///C:\git\data\20190712\calc_EER_Tint_OUT\Temphub_Tint_IN\20190712_all_data.csv')],
-                 axis=0, ignore_index=True)
+#data = pd.concat([pd.read_csv(r')],
+                  #pd.read_csv(r')], axis=0, ignore_index=True)
+data = pd.read_csv(r'file:///C:\git\data\temperature_resampled\calc_EER_Tint_OUT\calc_eer_all_Tint_OUT.csv').join(
+    pd.read_csv(r'C:\git\data\temperature_resampled\COOLING_temp_re.csv'))
 
-validation_series = data['COP']
-simulation_data =data.iloc[:, 1:6]
+
+validation_series = data['EER']
+simulation_data =data.iloc[:, 0:6]
 plt_linear_regression(simulation_data=simulation_data,
                       validation_series=validation_series)
 

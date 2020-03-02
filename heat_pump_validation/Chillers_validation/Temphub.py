@@ -36,3 +36,5 @@ data_nan = data.replace(0, np.nan).dropna()
 data_resampled = data_nan.resample('H').mean()
 data_resampled.to_csv(r'\\SRV02\RL-Institut\04_Projekte\220_GRECO\03-Projektinhalte\AP4_High_Penetration_of_Photovoltaics\T4_4_PV_heat_pumps\Validierung\PV_Chiller_COOLING\12_11_072019\Tint_IN_Temphub_Tint_IN\Revised\20190712resampled.csv')
 data_nan.to_csv(r'\\SRV02\RL-Institut\04_Projekte\220_GRECO\03-Projektinhalte\AP4_High_Penetration_of_Photovoltaics\T4_4_PV_heat_pumps\Validierung\PV_Chiller_COOLING\12_11_072019\Tint_IN_Temphub_Tint_IN\Revised\20190712all_data.csv')
+
+

@@ -42,9 +42,9 @@ def read_heat_pump_data(path, date, mode='COOLING'):
 if __name__ == "__main__":
     path = os.path.join(
         os.path.expanduser('~'),
-        'rl-institut/04_Projekte/220_GRECO/03-Projektinhalte/AP4_High_Penetration_of_Photovoltaics/T4_4_PV_heat_pumps/Data/UPM')
+        'C:\git\data')
     data = read_heat_pump_data(path=path, date='20190712', mode='COOLING')
-    data['P_AC (W)'].dropna().plot(legend=True)
-    data['P_thermal_int (W)'].dropna().plot(legend=True)
+    data['T_ext_IN'].dropna().plot(legend=True)
+    #data['P_thermal_int (W)'].dropna().plot(legend=True)
     plt.show()
     print(data.head())
