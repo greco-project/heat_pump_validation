@@ -8,6 +8,18 @@ validation_series = {Series}
     '''
 
 def plt_linear_regression(simulation_data, validation_series):
+    r"""
+    Parameters
+    ----------
+
+    :param simulation_data: pd.DataFrame
+    :param validation_series: pd.Series
+
+    :return:
+    -------
+
+    graph
+    """
     for sim_name in simulation_data:
         x =simulation_data[sim_name].values.reshape(-1, 1)
         y = validation_series.values.reshape(-1, 1)
