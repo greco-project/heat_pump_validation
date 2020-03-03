@@ -16,6 +16,7 @@ def temphub(t_high_series, t_low_series):
 
     pd.Series
     """
+
     t_high_list = t_high_series.values.tolist()
     t_low_list = t_low_series.values.tolist()
 
