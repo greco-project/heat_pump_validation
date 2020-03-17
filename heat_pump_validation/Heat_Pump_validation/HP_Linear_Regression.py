@@ -26,7 +26,7 @@ def plt_linear_regression(simulation_data, validation_series):
         plt.xlabel('COP QG 0,{}'.format(sim_name.split('_')[1]))
         plt.ylabel('COP')
         plt.plot([0, 12], [0, 12], color='red')
-        plt.savefig(r'C:\git\data\PV_HeatPump_HEATING\01_04_032019\resampled\Correlation_{}.png'.format(sim_name))
+        plt.savefig(r'C:\git\data\PV_HeatPump_HEATING\01_04_032019\Correlation_{}.png'.format(sim_name))
         plt.close()
 
     return linear_regressor
@@ -36,7 +36,7 @@ data = pd.read_csv(r'file:///C:\git\data\PV_HeatPump_HEATING\01_04_032019\final_
 data_resampled = pd.read_csv(r'file:///C:\git\data\PV_HeatPump_HEATING\01_04_032019\resampled\final_data_resampled.csv')
 
 
-validation_series = data_resampled['COP']
-simulation_data =data_resampled.iloc[:, 1:9]
+validation_series = data['COP']
+simulation_data =data.iloc[:, 1:9]
 plt_linear_regression(simulation_data=simulation_data,
                       validation_series=validation_series)
