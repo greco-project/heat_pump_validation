@@ -24,11 +24,11 @@ def temphub(t_high_series, t_low_series):
     return temphub_series
 
 
-datalogger = pd.read_csv(r'file:///C:\git\data\PV_HeatPump_HEATING\01_04_032019\calc_COP_all.csv')
-datalogger_resampled = pd.read_csv(r'file:///C:\git\data\PV_HeatPump_HEATING\01_04_032019\resampled\calc_COP_resampled.csv')
+datalogger = pd.read_csv(r'file:///C:\git\data\PV_HeatPump_HEATING\01_04_032019\calc_COP_original.csv')
+datalogger_resampled = pd.read_csv(r'file:///C:\git\data\PV_HeatPump_HEATING\01_04_032019\resampled\calc_COP_all_resampled.csv')
 
-validation_data = pd.read_csv(r'file:///C:\git\data\PV_HeatPump_HEATING\01_04_032019\datalogger_all.csv')
-validation_data_resampled = pd.read_csv(r'file:///C:\git\data\PV_HeatPump_HEATING\01_04_032019\resampled\datalogger_resampled.csv')
+validation_data = pd.read_csv(r'file:///C:\git\data\PV_HeatPump_HEATING\01_04_032019\data_original.csv')
+validation_data_resampled = pd.read_csv(r'file:///C:\git\data\PV_HeatPump_HEATING\01_04_032019\resampled\data_resampled.csv')
 
 validation_data['Time'] = validation_data['Time'].apply(lambda x: ':'.join(x.split(':')[0:-1]))
 validation_data['Time'] = pd.to_datetime(validation_data['Time'])
@@ -36,11 +36,11 @@ validation_data['Time'] = pd.to_datetime(validation_data['Time'])
 validation_data_resampled['Time'] = validation_data_resampled['Time'].apply(lambda x: ':'.join(x.split(':')[0:-1]))
 validation_data_resampled['Time'] = pd.to_datetime(validation_data_resampled['Time'])
 
-# temphub = temphub(t_high_series=validation_data['T_int '],
-#                   t_low_series=validation_data['T_ext'])
+# temphub = temphub(t_high_series=validation_data['T_int'],
+#                   t_low_series=validation_data['T_ext '])
 
-temphub_resampled= temphub(t_high_series=validation_data_resampled['T_int '],
-                           t_low_series=validation_data_resampled['T_ext'])
+temphub_resampled= temphub(t_high_series=validation_data_resampled['T_int'],
+                           t_low_series=validation_data_resampled['T_ext '])
 
 validation_series = validation_data['COP']
 

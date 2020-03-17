@@ -28,7 +28,7 @@ def calc_res(validation_list, simulation_data):
         residuals.append(fill_res)
     residuals = pd.concat(residuals, axis=1, names=['Res_0,{}'.format(quality_grade.split('_')[1])]) # Names wird im Dataframe nicht eingesetzt
     #print(residuals)
-    #residuals.to_csv(r'C:\git\data\PV_HeatPump_HEATING\01_04_032019\Residuals.csv'.format(quality_grade.split('_')[1]))
+    residuals.to_csv(r'C:\git\data\PV_HeatPump_HEATING\01_04_032019\resampled\Residuals_resampled.csv'.format(quality_grade.split('_')[1]))
 
     return residuals
 
@@ -74,8 +74,8 @@ def plt_res_temphub(residual_data, temphub):
     residual_data_list = list(residual_data)
     for res_name in residual_data_list:
         plt.figure()
-        # plt.ylim(-25, 20) # all data
-        plt.ylim(-11, 9)
+        #plt.ylim(-25, 20) # all data
+        plt.ylim(-15, 9)
         plt.xlabel('Temphub')
         plt.ylabel('Residual')
         plt.plot(temphub, residual_data[res_name], marker='o',
@@ -108,8 +108,8 @@ def plt_res_validation(residual_data, validation_series):
     residual_data_list = list(residual_data)
     for res_name in residual_data_list:
         plt.figure()
-        # plt.ylim(-20, 17) # all data
-        plt.ylim(-10, 10)
+        #plt.ylim(-20, 17) # all data
+        plt.ylim(-20, 10)
         plt.xlabel('{}'.format(res_name.split('_')[0]))
         plt.ylabel('Residual')
         plt.plot(validation_series, residual_data[res_name],
@@ -141,7 +141,7 @@ def plt_hist(residual_data, bins):
     for column in res_list:
         plt.figure()
         #plt.ylim(0, 2100) # all data
-        plt.ylim(0, 5) # resampled
+        plt.ylim(0, 12) # resampled
         plt.title('Histogram for calculated COP with QG 0,{}'.format(column.split('_')[1]))
         plt.xlabel('{} Range'.format(column.split('_')[0]))
         plt.ylabel('Rate')
@@ -163,10 +163,11 @@ if __name__ == '__main__':
     data = pd.read_csv(r'file:///C:\git\data\PV_HeatPump_HEATING\01_04_032019\final_data.csv')
     data_resampled = pd.read_csv(r'file:///C:\git\data\PV_HeatPump_HEATING\01_04_032019\resampled\final_data_resampled.csv')
 
+
     temphub = data_resampled['Temphub']
 
     simulation_data = data_resampled.iloc[:, 1:9]
-    validation_list = data['COP'].values.tolist()
+    validation_list = data_resampled['COP'].values.tolist()
 
     # temphub = temphub(t_high_series= data['T_ext_IN'],
     #                   t_low_series= data['T_int_IN'])
