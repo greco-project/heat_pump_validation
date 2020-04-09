@@ -45,6 +45,6 @@ if __name__ == "__main__":
         'C:\git\data')
     data = read_heat_pump_data(path=path, date='20190712', mode='COOLING')
     data['T_ext_IN'].dropna().plot(legend=True)
-    #data['P_thermal_int (W)'].dropna().plot(legend=True)
+    data['P_thermal_int (W)'].dropna().plot(legend=True)
     plt.show()
     print(data.head())
