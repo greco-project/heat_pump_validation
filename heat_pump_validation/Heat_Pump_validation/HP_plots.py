@@ -28,7 +28,7 @@ def calc_res(validation_list, simulation_data):
         residuals.append(fill_res)
     residuals = pd.concat(residuals, axis=1, names=['Res_0,{}'.format(quality_grade.split('_')[1])]) # Names wird im Dataframe nicht eingesetzt
     #print(residuals)
-    residuals.to_csv(r'C:\git\data\PV_HeatPump_HEATING\01_04_032019\resampled\Residuals_resampled.csv'.format(quality_grade.split('_')[1]))
+    #residuals.to_csv(r'C:\git\data\PV_HeatPump_HEATING\01_04_032019\resampled\Residuals_resampled.csv'.format(quality_grade.split('_')[1]))
 
     return residuals
 
@@ -108,16 +108,17 @@ def plt_res_validation(residual_data, validation_series):
     residual_data_list = list(residual_data)
     for res_name in residual_data_list:
         plt.figure()
-        #plt.ylim(-20, 17) # all data
-        plt.ylim(-20, 10)
+        plt.ylim(0, 17) # all data
+        plt.xlim(2, 8)
+        #plt.ylim(-20, 10)
         plt.xlabel('{}'.format(res_name.split('_')[0]))
         plt.ylabel('Residual')
         plt.plot(validation_series, residual_data[res_name],
-                 marker='+', color='green', linestyle='',
+                 marker='+', color='orange', linestyle='',
                  label='QG 0,{}'.format(res_name.split('_')[1]))
         plt.plot([0, 20], [0, 0], color='red')
         plt.legend()
-        plt.savefig(r'C:\git\data\PV_HeatPump_HEATING\01_04_032019\resampled\validation_series_marker_+_{}.png'.format(res_name.split('_')[1]))
+        plt.savefig(r'C:\git\data\PV_HeatPump_HEATING\01_04_032019\validation_series_marker_+_{}_v2.png'.format(res_name.split('_')[1]))
         plt.close()
     return res_name
 
@@ -149,7 +150,7 @@ def plt_hist(residual_data, bins):
                  cumulative=False, label='QG 0,{}'.format(column.split('_')[1]))
 
         plt.legend()
-        plt.savefig(r'C:\git\data\PV_HeatPump_HEATING\01_04_032019\resampled\Histogram_QG_{}.png'.format(column.split('_')[1]))
+        plt.savefig(r'C:\git\data\PV_HeatPump_HEATING\01_04_032019\Histogram_QG_{}.png'.format(column.split('_')[1]))
         plt.close()
     return res_list
 
@@ -164,10 +165,10 @@ if __name__ == '__main__':
     data_resampled = pd.read_csv(r'file:///C:\git\data\PV_HeatPump_HEATING\01_04_032019\resampled\final_data_resampled.csv')
 
 
-    temphub = data_resampled['Temphub']
+    temphub = data['Temphub']
 
-    simulation_data = data_resampled.iloc[:, 1:9]
-    validation_list = data_resampled['COP'].values.tolist()
+    simulation_data = data.iloc[:, 1:9]
+    validation_list = data['COP'].values.tolist()
 
     # temphub = temphub(t_high_series= data['T_ext_IN'],
     #                   t_low_series= data['T_int_IN'])
@@ -178,14 +179,14 @@ if __name__ == '__main__':
                          simulation_data=simulation_data))
 
 
-    plt_res_temphub(residual_data=residual,
-                    temphub=temphub)
+    #plt_res_temphub(residual_data=residual,
+                   # temphub=temphub)
 
 
 
 
     plt_res_validation(residual_data=residual,
-                       validation_series=data_resampled['COP'])
+                       validation_series=data['COP'])
 
 
-    plt_hist(residual_data=residual, bins=bins)
+    #plt_hist(residual_data=residual, bins=bins)
