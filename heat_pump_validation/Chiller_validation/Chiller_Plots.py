@@ -2,7 +2,7 @@ import pandas as pd
 import matplotlib.pyplot as plt
 
 
-# Calculates residuals between measured EER/COP and calculated EER/COP
+# Calculates residuals between measured EER and calculated EER
 def calc_res(validation_list, simulation_data):
     r"""
     calculates residual
@@ -26,9 +26,8 @@ def calc_res(validation_list, simulation_data):
         residual = [(va_li - sim_li) for (va_li, sim_li) in zip(validation_list, simulation_data_list)]
         fill_res = pd.DataFrame({'{}'.format(quality_grade): residual})
         residuals.append(fill_res)
-    residuals = pd.concat(residuals, axis=1, names=['Res_0,{}'.format(quality_grade.split('_')[1])]) # Names wird im Dataframe nicht eingesetzt
-    #print(residuals)
-    residuals.to_csv(r'\\SRV02\RedirectedFolders\Stefanie.Nguyen\Desktop\temperature_resampled\Residuals.csv'.format(quality_grade.split('_')[1]))
+    residuals = pd.concat(residuals, axis=1, names=['Res_0,{}'.format(quality_grade.split('_')[1])])
+    #residuals.to_csv(r'C:\git\data\PV_Chiller_COOLING\Residuals.csv'.format(quality_grade.split('_')[1]))
 
     return residuals
 
@@ -74,21 +73,21 @@ def plt_res_temphub(residual_data, temphub):
     residual_data_list = list(residual_data)
     for res_name in residual_data_list:
         plt.figure()
-        plt.ylim(-160, 75)
+        plt.ylim(-120, 110)
         plt.xlabel('Temphub')
         plt.ylabel('Residual')
         plt.plot(temphub, residual_data[res_name], marker='o',
                  linestyle='', label='QG 0,{}'.format(res_name.split('_')[1]))
         plt.plot([-20, 10], [0, 0], color='r')
         plt.legend()
-        plt.savefig(r'\\SRV02\RedirectedFolders\Stefanie.Nguyen\Desktop\temperature_resampled\temphub_marker_o_{}.png'.format(res_name.split('_')[1]))
+        plt.savefig(r'C:\git\data\PV_Chiller_COOLING\temphub_marker_o_{}.png'.format(res_name.split('_')[1]))
         plt.close()
 
     return res_name
 
 
 
-# Plots residual series over EER/COP
+# Plots residual series over EER
 def plt_res_validation(residual_data, validation_series):
     r"""
     Plots the residual data over the validation series
@@ -107,7 +106,7 @@ def plt_res_validation(residual_data, validation_series):
     residual_data_list = list(residual_data)
     for res_name in residual_data_list:
         plt.figure()
-        plt.ylim(-160, 80)
+        plt.ylim(-120, 110)
         plt.xlabel('{}'.format(res_name.split('_')[0]))
         plt.ylabel('Residual')
         plt.plot(validation_series, residual_data[res_name],
@@ -115,7 +114,7 @@ def plt_res_validation(residual_data, validation_series):
                  label='QG 0,{}'.format(res_name.split('_')[1]))
         plt.plot([0, 16], [0, 0], color='red')
         plt.legend()
-        plt.savefig(r'\\SRV02\RedirectedFolders\Stefanie.Nguyen\Desktop\temperature_resampled\validation_series_marker_+_{}.png'.format(res_name.split('_')[1]))
+        plt.savefig(r'C:\git\data\PV_Chiller_COOLING\validation_series_marker_+_{}.png'.format(res_name.split('_')[1]))
         plt.close()
     return res_name
 
@@ -138,7 +137,7 @@ def plt_hist(residual_data, bins):
     res_list = list(residual_data)
     for column in res_list:
         plt.figure()
-        plt.ylim(0, 18)
+        plt.ylim(0, 30)
         plt.title('Histogram for calculated EER with QG 0,{}'.format(column.split('_')[1]))
         plt.xlabel('{} Range'.format(column.split('_')[0]))
         plt.ylabel('Rate')
@@ -146,25 +145,27 @@ def plt_hist(residual_data, bins):
                  cumulative=False, label='QG 0,{}'.format(column.split('_')[1]))
 
         plt.legend()
-        plt.savefig(r'\\SRV02\RedirectedFolders\Stefanie.Nguyen\Desktop\temperature_resampled\Histogram_QG_{}.png'.format(column.split('_')[1]))
+        plt.savefig(r'C:\git\data\PV_Chiller_COOLING\Histogram_QG_{}.png'.format(column.split('_')[1]))
         plt.close()
     return res_list
 
 
 
 if __name__ == '__main__':
-    bins = range(-16, 45)
+    bins = range(-50,50)
 
+    data = pd.read_csv(
+        r'\\fs01\RL-Institut\04_Projekte\220_GRECO\03-Projektinhalte\AP4_High_Penetration_of_Photovoltaics\T4_4_PV_heat_pumps\Validierung\PV_Chiller_COOLING\temperature_resampled\graph_data\calc_eer_all_Tint_OUT.csv',
+        parse_dates=True, index_col=0).join(
+        pd.read_csv(
+            r'\\fs01\RL-Institut\04_Projekte\220_GRECO\03-Projektinhalte\AP4_High_Penetration_of_Photovoltaics\T4_4_PV_heat_pumps\Validierung\PV_Chiller_COOLING\temperature_resampled\graph_data\COOLING_temp_re.csv',
+            parse_dates=True, index_col=0))
 
-    data = pd.read_csv(r'file:///C:\git\data\temperature_resampled\calc_EER_%20Tint_IN\calc_eer_all.csv',
-                       parse_dates=True, index_col=0).join(
-        pd.read_csv(r'C:\git\data\temperature_resampled\COOLING_temp_re.csv',
-                    parse_dates=True, index_col=0))
-    simulation_data = data.iloc[:, 0:6]
+    simulation_data = data.iloc[:, 0:7]
     validation_list = data['EER'].values.tolist()
 
-    temphub = temphub(t_high_series= data['T_ext_IN'],
-                      t_low_series= data['T_int_IN'])
+    temphub = temphub(t_high_series= data['T_ext_IN '],
+                      t_low_series= data['Tint_IN'])
 
 
 
