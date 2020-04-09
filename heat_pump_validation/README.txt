@@ -4,6 +4,8 @@ Oemof Version für calc_eer_zeroDivision (which is not used anymore):
 
 script used to calculate the RMSE:
 feedin_germany - validation_tools.py
+bias corrected = False
+normalized = False
 
 script used to calculate COP/EER:
 oemof - compression_heatpumps_and_chillers.py
