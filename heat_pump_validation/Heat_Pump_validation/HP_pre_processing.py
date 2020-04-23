@@ -1,11 +1,12 @@
 import pandas as pd
 
 r"""
-temp_diff: T_air/T_int_OUT - T_int_IN
-internal fan turns off, leading to a negative or small difference
+T_air = T_int_OUT
+temp_diff: T_air - T_int_IN
+integral fan turns off, leading to a negative or small difference
 
-temp_diff_2: T_air/T_int_OUT - T_ext_IN
-[...], leading to small or negative differences 
+temp_diff_2: T_air - T_ext_IN
+compressor shuts down, leading to small or negative differences 
 
  """
 
@@ -25,7 +26,6 @@ temp_diff_series = pd.Series(temp_diff, name='temp_diff')
 
 temp_diff_2 = [(t_h - t_ext) for (t_h, t_ext) in zip(list_temp_high, list_t_ext)]
 temp_diff_2_series = pd.Series(temp_diff_2, name='temp_diff_2')
-
 
 
 tempcontrol.loc[tempcontrol.COP == 0, 'COP'] = None
