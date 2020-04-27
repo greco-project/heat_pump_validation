@@ -32,8 +32,8 @@ def plt_linear_regression(simulation_data, validation_series):
     return linear_regressor
 
 
-data = pd.read_csv(r'file:///C:\git\data\PV_HeatPump_HEATING\01_04_032019\final_data.csv')
-data_resampled = pd.read_csv(r'file:///\\fs01\RL-Institut\04_Projekte\220_GRECO\03-Projektinhalte\AP4_High_Penetration_of_Photovoltaics\T4_4_PV_heat_pumps\Validierung\PV_HeatPump_HEATING\01_04_032019\resampled\final_data_resampled.csv')
+data = pd.read_csv()
+data_resampled = pd.read_csv()
 
 
 validation_series = data['COP']
