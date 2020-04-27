@@ -35,6 +35,7 @@ dataframe = pd.concat([datalogger['Time'], tempcontrol['COP'], datalogger['T_air
 dataframe.loc[dataframe.temp_diff < 5, 'temp_diff'] = None
 dataframe.loc[dataframe.temp_diff_2 < 5, 'temp_diff_2'] = None
 temp_diff_data = dataframe.dropna()
+
 temp_diff_data.to_csv(r'C:\git\data\PV_HeatPump_HEATING\20190301\20190301_temp_diff_all.csv')
 print(temp_diff_data)
 
