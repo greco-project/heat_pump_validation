@@ -26,8 +26,8 @@ def calc_res(validation_list, simulation_data):
         residual = [(va_li - sim_li) for (va_li, sim_li) in zip(validation_list, simulation_data_list)]
         fill_res = pd.DataFrame({'{}'.format(quality_grade): residual})
         residuals.append(fill_res)
-    residuals = pd.concat(residuals, axis=1, names=['Res_0,{}'.format(quality_grade.split('_')[1])]) # Names wird im Dataframe nicht eingesetzt
-    #print(residuals)
+    residuals = pd.concat(residuals, axis=1, names=['Res_0,{}'.format(quality_grade.split('_')[1])])
+    print(residuals)
     #residuals.to_csv(r'C:\git\data\PV_HeatPump_HEATING\01_04_032019\resampled\Residuals_resampled.csv'.format(quality_grade.split('_')[1]))
 
     return residuals
@@ -35,7 +35,7 @@ def calc_res(validation_list, simulation_data):
 # Calculates Temphub
 def temphub(t_high_series, t_low_series):
     r"""
-    Calculates the temphub with t_high as heat source and t_low as Wärmesenke(?)
+    Calculates the temphub with t_high as heat source and t_low as heat sink
     Parameters
     ----------
 
@@ -158,35 +158,3 @@ def plt_hist(residual_data, bins):
 
 if __name__ == '__main__':
     bins = range(-16, 45)
-
-
-
-    data = pd.read_csv(r'file:///C:\git\data\PV_HeatPump_HEATING\01_04_032019\final_data.csv')
-    data_resampled = pd.read_csv(r'file:///C:\git\data\PV_HeatPump_HEATING\01_04_032019\resampled\final_data_resampled.csv')
-
-
-    temphub = data['Temphub']
-
-    simulation_data = data.iloc[:, 1:9]
-    validation_list = data['COP'].values.tolist()
-
-    # temphub = temphub(t_high_series= data['T_ext_IN'],
-    #                   t_low_series= data['T_int_IN'])
-
-
-
-    residual = (calc_res(validation_list=validation_list,
-                         simulation_data=simulation_data))
-
-
-    #plt_res_temphub(residual_data=residual,
-                   # temphub=temphub)
-
-
-
-
-    plt_res_validation(residual_data=residual,
-                       validation_series=data['COP'])
-
-
-    #plt_hist(residual_data=residual, bins=bins)
