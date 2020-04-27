@@ -21,14 +21,13 @@ data_resample_2 = datalogger_2.resample('H').mean()
 
 datalogger = pd.concat([datalogger_1, datalogger_2])
 datalogger_resample = pd.concat([data_resample_1, data_resample_2])
-# datalogger.to_csv(r'C:\git\data\PV_HeatPump_HEATING\01_04_032019\data_original.csv')
-# datalogger_resample.to_csv(r'C:\git\data\PV_HeatPump_HEATING\01_04_032019\resampled\data_resampled.csv')
+
+datalogger.to_csv(r'C:\git\data\PV_HeatPump_HEATING\01_04_032019\data_original.csv')
+datalogger_resample.to_csv(r'C:\git\data\PV_HeatPump_HEATING\01_04_032019\resampled\data_resampled.csv')
 
 temp_high = datalogger_resample['T_air']
 temp_low = datalogger_resample['T_ext ']
 
-#data_t_high_list = data_t_high.values.tolist()
-#data_t_low_list = data_t_low.values.tolist()
 
 cops_chiller = cmpr_hp_chiller.calc_cops(temp_high= temp_high,
                                          temp_low= temp_low,
@@ -40,7 +39,7 @@ dataseries = pd.DataFrame(cops_chiller)
 
 dataseries.to_csv(r'C:\git\data\PV_HeatPump_HEATING\01_04_032019\resampled\COP_resampled\COP_4.csv', decimal='.')
 
-# print("")
-# print("Coefficients of Performance (COP): ", *cops_chiller, sep='\n')
-# print("")
+print("")
+print("Coefficients of Performance (COP): ", *cops_chiller, sep='\n')
+print("")
 
