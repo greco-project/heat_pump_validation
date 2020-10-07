@@ -64,14 +64,32 @@ def fix_param_name(data, name):
     temp_diff_3 = [(t_m - t_l) for (t_m, t_l) in zip(list_temp_medium, list_temp_low)]
     temp_diff_3_series = pd.Series(temp_diff_3, name='temp_diff_3')
 
-tempcontrol.loc[tempcontrol.COP == 0, 'COP'] = None
-dataframe = pd.concat([datalogger['Time'], tempcontrol['COP'], datalogger['T_air'],
-                       datalogger['T_ext '], datalogger['T_int'], temp_diff_series,
-                       temp_diff_2_series], axis=1).set_index('Time')
-dataframe.loc[dataframe.temp_diff < 5, 'temp_diff'] = None
-dataframe.loc[dataframe.temp_diff_2 < 5, 'temp_diff_2'] = None
-temp_diff_data = dataframe.dropna()
+    # Convert values where COP = 0 to None
+    tempcontrol.loc[tempcontrol.COP == 0, 'COP'] = None
 
-temp_diff_data.to_csv(r'C:\git\data\PV_HeatPump_HEATING\20190301\20190301_temp_diff_all.csv')
-print(temp_diff_data)
+    # Concatenate measured values with 'Time' column
+    dataframe = pd.concat([datalogger['Time'], tempcontrol['COP'], datalogger['T_comp(ºC)'],
+                           datalogger['T_evap (ºC)'], datalogger['T_cond (ºC)'], datalogger['Tint-Text (ºC)'],
+                           datalogger['T_air'], datalogger['T_ext'], datalogger['T_int'], temp_diff_series,
+                           temp_diff_2_series, temp_diff_3_series], axis=1).set_index('Time')
+
+    # Convert temperature differences that are smaller than 5 °C to None values
+    dataframe.loc[dataframe.temp_diff < 5, 'temp_diff'] = None
+    dataframe.loc[dataframe.temp_diff_2 < 5, 'temp_diff_2'] = None
+    dataframe.loc[dataframe.temp_diff_3 < 5, 'temp_diff_3'] = None
+
+    # Drop every None value from cleaned data
+    cleaned_data = dataframe.dropna()
+
+    # Print how much data has been cleaned
+    #print('\nDate: ', date_string,
+    #      '\nData points raw data: ', len(datalogger),
+    #      '\nData points preprocessed: ', len(cleaned_data),
+    #      '\nRelation of cleaned data to whole data: ', (len(datalogger) - len(cleaned_data)) / len(datalogger), '\n')
+
+    # Export data to csv
+    cleaned_data.to_csv(os.path.join(path_preprocessed_data, date_string + '_temp_diff_all.csv'))
+
+    # Print data
+    print('Preprocessed data: ', os.path.join(path_preprocessed_data, date_string + '_temp_diff_all.csv'))
 
