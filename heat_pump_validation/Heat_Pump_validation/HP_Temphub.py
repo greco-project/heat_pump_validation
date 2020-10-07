@@ -38,9 +38,12 @@ validation_data['Time'] = pd.to_datetime(validation_data['Time'])
 validation_data_resampled['Time'] = validation_data_resampled['Time'].apply(lambda x: ':'.join(x.split(':')[0:-1]))
 validation_data_resampled['Time'] = pd.to_datetime(validation_data_resampled['Time'])
 
+# Calculate Temperaturhub
+temphub_value = temphub(t_high_series=validation_data['T_air'],
+                        t_low_series=validation_data['T_ext'])
+temphub_value_resampled = temphub(t_high_series=validation_data_resampled['T_air'],
+                                  t_low_series=validation_data_resampled['T_ext'])
 
-temphub_resampled= temphub(t_high_series=validation_data_resampled['T_int'],
-                           t_low_series=validation_data_resampled['T_ext '])
 
 validation_series_resampled = validation_data_resampled['COP']
 
