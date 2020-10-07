@@ -43,8 +43,12 @@ def plt_linear_regression(simulation_data, validation_series, mode):
     return linear_regressor
 
 
-data = pd.read_csv()
-data_resampled = pd.read_csv()
+##################################################################
+# Choose what data you want to examine:
+# 1. data_original -> original data
+# 2. data_resampled -> resampled data
+data = 'data_resampled'
+##################################################################
 
 
 validation_series = data['COP']
