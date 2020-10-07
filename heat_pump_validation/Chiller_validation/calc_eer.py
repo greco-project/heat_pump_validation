@@ -10,6 +10,8 @@ oemof.solph.transformer.
 
 import oemof.thermal.compression_heatpumps_and_chillers as cmpr_hp_chiller
 import pandas as pd
+import os
+import numpy as np
 
 # Set paths
 path_file = os.path.dirname(__file__)
