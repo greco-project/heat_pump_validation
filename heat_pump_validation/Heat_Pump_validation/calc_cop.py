@@ -48,18 +48,25 @@ temp_high_resampled = datalogger_resample['T_air']
 temp_low = datalogger['T_ext']
 temp_low_resampled = datalogger_resample['T_ext']
 
+quality_grades = np.arange(0.05, 0.55, 0.05)
+cops_heat_pump, cops_heat_pump_resampled = [pd.DataFrame() for variable in range(2)]
+cops_heat_pump['Time'] = datalogger.index
+cops_heat_pump_resampled['Time'] = datalogger_resample.index
 
-cops_chiller = cmpr_hp_chiller.calc_cops(temp_high= temp_high,
-                                         temp_low= temp_low,
-                                         quality_grade=0.4,
-                                         mode='heat_pump')
 
-dataseries = pd.DataFrame(cops_chiller)
+for quality_grade in quality_grades:
+    cop_name = str(np.round(quality_grade, 2)).split('.')[1]
+    cops_heat_pump['COP_' + cop_name] = cmpr_hp_chiller.calc_cops(temp_high=temp_high,
+                                                                  temp_low=temp_low,
+                                                                  quality_grade=np.round(quality_grade, 2),
+                                                                  mode='heat_pump')
 
+    cops_heat_pump_resampled['COP_' + cop_name] = cmpr_hp_chiller.calc_cops(temp_high=temp_high_resampled,
+                                                                            temp_low=temp_low_resampled,
+                                                                            quality_grade=np.round(quality_grade, 2),
+                                                                            mode='heat_pump')
 
     print('\nCoefficients of Performance (COP) with quality grade ' + str(np.round(quality_grade, 2)) + ':')
+    print(cops_heat_pump_resampled['COP_' + cop_name])
 
-print("")
-print("Coefficients of Performance (COP): ", *cops_chiller, sep='\n')
-print("")
 
