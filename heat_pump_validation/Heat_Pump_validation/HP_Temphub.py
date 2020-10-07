@@ -61,8 +61,12 @@ validation_series = validation_data['COP']
 validation_series_resampled = validation_data_resampled['COP']
 
 
-final_data_resampled = pd.concat([datalogger_resampled,
-                                  temphub_resampled, validation_series_resampled], axis=1,
-                                 names=['Time', 'COP']).set_index('Time')
+final_data = pd.concat([datalogger, temphub_value, validation_series],
+                       axis=1, names=['Time', 'COP']).set_index('Time')
+final_data_resampled = pd.concat([datalogger_resampled, temphub_value_resampled, validation_series_resampled],
+                                 axis=1, names=['Time', 'COP']).set_index('Time')
+
+final_data.to_csv(os.path.join(path_preprocessed_data, 'original', 'final_data.csv'))
+final_data_resampled.to_csv(os.path.join(path_preprocessed_data, 'resampled', 'final_data_resampled.csv'))
 
 # Print data
