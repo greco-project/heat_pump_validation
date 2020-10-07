@@ -14,6 +14,17 @@ compressor shuts down, leading to small or negative differences
 dates = np.array(['20190301', '20190304'])
 
 
+def fix_param_name(data, name):
+    """
+    This function fixes bugs in the naming of the parameters
+    :param name:
+    """
+    try:
+        data.rename(columns={name + ' ': name}, inplace=True)
+    except KeyError:
+        print('Value ' + name + ' not in table. Please check.')
+
+
     # Set paths
     path_file = os.path.dirname(__file__)
     path_raw_data = os.path.abspath(os.path.join(path_file, os.pardir, os.pardir, 'raw_data'))
