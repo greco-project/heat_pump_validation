@@ -1,4 +1,6 @@
 import pandas as pd
+import numpy as np
+import os
 
 r"""
 T_air = T_int_OUT
@@ -25,6 +27,7 @@ def fix_param_name(data, name):
         print('Value ' + name + ' not in table. Please check.')
 
 
+def preprocess_heat_pump_data(date_string):
     # Set paths
     path_file = os.path.dirname(__file__)
     path_raw_data = os.path.abspath(os.path.join(path_file, os.pardir, os.pardir, 'raw_data'))
@@ -93,3 +96,6 @@ def fix_param_name(data, name):
     # Print data
     print('Preprocessed data: ', os.path.join(path_preprocessed_data, date_string + '_temp_diff_all.csv'))
 
+
+for item in dates:
+    preprocess_heat_pump_data(item)
