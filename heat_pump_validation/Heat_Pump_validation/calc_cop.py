@@ -33,16 +33,20 @@ try:
 except FileNotFoundError:
     print('\nData could not be read. It may not exist yet. Please run HP_pre_processing.py first.\n')
 
+# Resampled data is the mean over an hour of original data
 data_resample_2 = datalogger_2.resample('H').mean()
 
-datalogger = pd.concat([datalogger_1, datalogger_2])
-datalogger_resample = pd.concat([data_resample_1, data_resample_2])
+# Concatenate data of the two dates for original and sampled data
+datalogger = pd.concat([datalogger_1, datalogger_2], sort=False)
+datalogger_resample = pd.concat([data_resample_1, data_resample_2], sort=False)
 
 # Save
 datalogger.to_csv(os.path.join(path_preprocessed_data, 'original', 'data_original.csv'))
 
-temp_high = datalogger_resample['T_air']
-temp_low = datalogger_resample['T_ext ']
+temp_high = datalogger['T_air']
+temp_high_resampled = datalogger_resample['T_air']
+temp_low = datalogger['T_ext']
+temp_low_resampled = datalogger_resample['T_ext']
 
 
 cops_chiller = cmpr_hp_chiller.calc_cops(temp_high= temp_high,
