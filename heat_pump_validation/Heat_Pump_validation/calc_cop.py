@@ -42,6 +42,7 @@ datalogger_resample = pd.concat([data_resample_1, data_resample_2], sort=False)
 
 # Save
 datalogger.to_csv(os.path.join(path_preprocessed_data, 'original', 'data_original.csv'))
+datalogger_resample.to_csv(os.path.join(path_preprocessed_data, 'resampled', 'data_resampled.csv'))
 
 temp_high = datalogger['T_air']
 temp_high_resampled = datalogger_resample['T_air']
@@ -70,3 +71,7 @@ for quality_grade in quality_grades:
     print(cops_heat_pump_resampled['COP_' + cop_name])
 
 
+cops_heat_pump.to_csv(os.path.join(path_preprocessed_data, 'original', 'calc_COP_original.csv'),
+                      decimal='.', index=False)
+cops_heat_pump_resampled.to_csv(os.path.join(path_preprocessed_data, 'resampled', 'calc_COP_all_resampled.csv'),
+                                decimal='.', index=False)
