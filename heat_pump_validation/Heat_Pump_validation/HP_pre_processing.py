@@ -42,18 +42,27 @@ def fix_param_name(data, name):
     fix_param_name(datalogger, 'T_ext')
     fix_param_name(datalogger, 'T_int')
     fix_param_name(datalogger, 'T_air')
-datalogger['Time'] = datalogger['Time'].apply(lambda x: ':'.join(x.split(':')[0:-1]))
-datalogger['Time'] = pd.to_datetime(datalogger['Time'])
-list_temp_high = datalogger['T_air'].values.tolist()
-list_temp_low = datalogger['T_int'].values.tolist()
-list_t_ext = datalogger['T_ext '].values.tolist()
 
-temp_diff = [(t_h - t_l) for (t_h, t_l) in zip(list_temp_high, list_temp_low)]
-temp_diff_series = pd.Series(temp_diff, name='temp_diff')
+    # Change format of 'Time' to datetime format
+    datalogger['Time'] = datalogger['Time'].apply(lambda x: ':'.join(x.split(':')[0:-1]))
+    datalogger['Time'] = pd.to_datetime(datalogger['Time'])
 
-temp_diff_2 = [(t_h - t_ext) for (t_h, t_ext) in zip(list_temp_high, list_t_ext)]
-temp_diff_2_series = pd.Series(temp_diff_2, name='temp_diff_2')
+    # Write values of temperatures to list
+    list_temp_high = datalogger['T_air'].values.tolist()  # External temperature of compressor
+    list_temp_low = datalogger['T_ext'].values.tolist()  # External temperature of evaporator
+    list_temp_medium = datalogger['T_int'].values.tolist()  # External temperature of condenser
 
+    # Calculate temperature difference between compressor and condenser
+    temp_diff = [(t_h - t_m) for (t_h, t_m) in zip(list_temp_high, list_temp_medium)]
+    temp_diff_series = pd.Series(temp_diff, name='temp_diff')
+
+    # Calculate temperature difference between compressor and evaporator
+    temp_diff_2 = [(t_h - t_l) for (t_h, t_l) in zip(list_temp_high, list_temp_low)]
+    temp_diff_2_series = pd.Series(temp_diff_2, name='temp_diff_2')
+
+    # Calculate temperature difference between condenser and evaporator
+    temp_diff_3 = [(t_m - t_l) for (t_m, t_l) in zip(list_temp_medium, list_temp_low)]
+    temp_diff_3_series = pd.Series(temp_diff_3, name='temp_diff_3')
 
 tempcontrol.loc[tempcontrol.COP == 0, 'COP'] = None
 dataframe = pd.concat([datalogger['Time'], tempcontrol['COP'], datalogger['T_air'],
