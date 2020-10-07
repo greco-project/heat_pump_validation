@@ -97,5 +97,15 @@ elif data == 'data_resampled':
                                  parse_dates=True, index_col=0)
     except FileNotFoundError:
         print('\nData could not be read. It may not exist yet. Please run calc_eer.py first.\n')
+
+# Set Time as index and join data of calculated EER and original EER
+datalogger['Time'] = EER.index
+datalogger = datalogger.set_index('Time')
+datalogger = datalogger.join(EER)
+
+# Call regression function
+validation_series = datalogger['EER']
+simulation_data = datalogger.iloc[:, 0:9]
 plt_linear_regression(simulation_data=simulation_data,
-                      validation_series=validation_series)
+                      validation_series=validation_series,
+                      mode=data)
