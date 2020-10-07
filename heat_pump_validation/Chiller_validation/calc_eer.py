@@ -78,12 +78,28 @@ temp_high_resampled = datalogger_resampled['T_ext']
 temp_low = datalogger['T_air']
 temp_low_resampled = datalogger_resampled['T_air']
 
-dataseries = pd.DataFrame(cops_chiller)
+quality_grades = np.arange(0.05, 0.55, 0.05)
+eer_chiller, eer_chiller_resampled = [pd.DataFrame() for variable in range(2)]
+eer_chiller['Time'] = datalogger.index
+eer_chiller_resampled['Time'] = datalogger_resampled.index
 
+for quality_grade in quality_grades:
+    eer_name = str(np.round(quality_grade, 2)).split('.')[1]
+    eer_chiller['EER_' + eer_name] = cmpr_hp_chiller.calc_cops(temp_high=temp_high,
+                                                               temp_low=temp_low,
+                                                               quality_grade=np.round(quality_grade, 2),
+                                                               mode='chiller')
+
+    eer_chiller_resampled['EER_' + eer_name] = cmpr_hp_chiller.calc_cops(temp_high=temp_high_resampled,
+                                                                         temp_low=temp_low_resampled,
+                                                                         quality_grade=np.round(quality_grade, 2),
+                                                                         mode='chiller')
 
     print('\nEnergy Efficiency Ratio (EER) with quality grade ' + str(np.round(quality_grade, 2)) + ':')
+    print(eer_chiller_resampled['EER_' + eer_name])
 
-# print("")
-# print("Coefficients of Performance (COP): ", *cops_chiller, sep='\n')
-# print("")
+eer_chiller.to_csv(os.path.join(path_preprocessed_data, 'original', 'calc_eer_all_Tint_OUT.csv'),
+                   decimal='.', index=False)
+eer_chiller_resampled.to_csv(os.path.join(path_preprocessed_data, 'resampled', 'calc_eer_all_Tint_OUT_re.csv'),
+                             decimal='.', index=False)
 
