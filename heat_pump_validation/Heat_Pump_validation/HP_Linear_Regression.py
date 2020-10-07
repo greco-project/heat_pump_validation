@@ -50,8 +50,27 @@ def plt_linear_regression(simulation_data, validation_series, mode):
 data = 'data_resampled'
 ##################################################################
 
-
-validation_series = data['COP']
-simulation_data =data.iloc[:, 1:9]
-plt_linear_regression(simulation_data=simulation_data,
-                      validation_series=validation_series)
+if data == 'data_original':
+    # Read data
+    try:
+        data_original = pd.read_csv(os.path.join(path_preprocessed_data, 'original', 'final_data.csv'))
+    except FileNotFoundError:
+        print('\nData could not be read. It may not exist yet. Please run HP_Temphub.py first.\n')
+    # Plot linear regression for original data
+    validation_series = data_original['COP']
+    simulation_data = data_original.iloc[:, 1:11]
+    plt_linear_regression(simulation_data=simulation_data,
+                          validation_series=validation_series,
+                          mode=data)
+elif data == 'data_resampled':
+    # Read data
+    try:
+        data_resampled = pd.read_csv(os.path.join(path_preprocessed_data, 'resampled', 'final_data_resampled.csv'))
+    except FileNotFoundError:
+        print('\nData could not be read. It may not exist yet. Please run HP_Temphub.py first.\n')
+    # Plot linear regression for sampled data
+    validation_resampled_series = data_resampled['COP']
+    simulation_resampled_data = data_resampled.iloc[:, 1:11]
+    plt_linear_regression(simulation_data=simulation_resampled_data,
+                          validation_series=validation_resampled_series,
+                          mode=data)
