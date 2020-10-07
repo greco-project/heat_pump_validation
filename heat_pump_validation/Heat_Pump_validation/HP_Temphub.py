@@ -1,5 +1,6 @@
 import pandas as pd
-import numpy as np
+import os
+
 
 def temphub(t_high_series, t_low_series):
     r"""
@@ -70,3 +71,5 @@ final_data.to_csv(os.path.join(path_preprocessed_data, 'original', 'final_data.c
 final_data_resampled.to_csv(os.path.join(path_preprocessed_data, 'resampled', 'final_data_resampled.csv'))
 
 # Print data
+print('\nFinal original data: ', os.path.join(path_preprocessed_data, 'original', 'final_data.csv'))
+print('\nFinal resampled data: ', os.path.join(path_preprocessed_data, 'resampled', 'final_data_resampled.csv'))
