@@ -30,6 +30,18 @@ def fix_param_name(data, name):
     path_raw_data = os.path.abspath(os.path.join(path_file, os.pardir, os.pardir, 'raw_data'))
     path_preprocessed_data = os.path.abspath(os.path.join(path_file, os.pardir, os.pardir,
                                                           'results', 'heat_pump', 'original'))
+
+    # Read original data of datalogger
+    datalogger = pd.read_csv(os.path.join(path_raw_data, date_string + '_MPPT_HEATING_Datalogger.csv'),
+                             low_memory=False)
+    # Read original data of tempcontrol
+    tempcontrol = pd.read_csv(os.path.join(path_raw_data, date_string + '_MPPT_HEATING_TempControl.csv'),
+                              low_memory=False)
+
+    # Adjust parameter naming for the parameters needed in this file
+    fix_param_name(datalogger, 'T_ext')
+    fix_param_name(datalogger, 'T_int')
+    fix_param_name(datalogger, 'T_air')
 datalogger['Time'] = datalogger['Time'].apply(lambda x: ':'.join(x.split(':')[0:-1]))
 datalogger['Time'] = pd.to_datetime(datalogger['Time'])
 list_temp_high = datalogger['T_air'].values.tolist()
