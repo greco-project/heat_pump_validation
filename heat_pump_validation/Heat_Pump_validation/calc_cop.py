@@ -17,10 +17,22 @@ path_preprocessed_data = os.path.abspath(os.path.join(path_file, os.pardir, os.p
                                                       'results', 'heat_pump'))
 
 # Data from 03.04.2019
-                          parse_dates=True, index_col=0)
+try:
+    datalogger_1 = pd.read_csv(os.path.join(path_preprocessed_data, 'original', '20190304_temp_diff_all.csv'),
+                               parse_dates=True, index_col=0)
+except FileNotFoundError:
+    print('\nData could not be read. It may not exist yet. Please run HP_pre_processing.py first.\n')
+
+# Resampled data is the mean over an hour of original data
 data_resample_1 = datalogger_1.resample('H').mean()
 
-                           parse_dates=True, index_col=0)
+# Data from 01.04.2019
+try:
+    datalogger_2 = pd.read_csv(os.path.join(path_preprocessed_data, 'original', '20190301_temp_diff_all.csv'),
+                               parse_dates=True, index_col=0)
+except FileNotFoundError:
+    print('\nData could not be read. It may not exist yet. Please run HP_pre_processing.py first.\n')
+
 data_resample_2 = datalogger_2.resample('H').mean()
 
 datalogger = pd.concat([datalogger_1, datalogger_2])
