@@ -7,7 +7,8 @@ path_file = os.path.dirname(__file__)
 path_preprocessed_data = os.path.abspath(os.path.join(path_file, os.pardir, os.pardir,
                                                       'results', 'heat_pump'))
 
-def plt_linear_regression(simulation_data, validation_series):
+
+def plt_linear_regression(simulation_data, validation_series, mode):
     r"""
     Parameters
     ----------
@@ -31,7 +32,13 @@ def plt_linear_regression(simulation_data, validation_series):
         plt.ylabel('COP')
         plt.plot([0, 12], [0, 12], color='red')
         if mode == 'data_resampled':
-        plt.close()
+            plt.savefig(os.path.join(path_preprocessed_data,
+                                     'resampled', 'figures', 'Correlation_{}.png'.format(sim_name)))
+        elif mode == 'data_original':
+            plt.savefig(os.path.join(path_preprocessed_data,
+                                     'original', 'figures', 'Correlation_{}.png'.format(sim_name)))
+        #plt.close()
+        plt.show()
 
     return linear_regressor
 
