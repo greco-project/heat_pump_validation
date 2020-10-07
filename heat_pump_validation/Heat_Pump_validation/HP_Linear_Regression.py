@@ -1,6 +1,7 @@
 import pandas as pd
 import matplotlib.pyplot as plt
 from sklearn.linear_model import LinearRegression
+import os
 
 # Set paths
 path_file = os.path.dirname(__file__)
