@@ -31,10 +31,21 @@ path_preprocessed_data = os.path.abspath(os.path.join(path_file, os.pardir, os.p
 
 # Get COP calculations
 try:
+    datalogger = pd.read_csv(os.path.join(path_preprocessed_data, 'original', 'calc_COP_original.csv'))
+    datalogger_resampled = pd.read_csv(os.path.join(path_preprocessed_data, 'resampled', 'calc_COP_all_resampled.csv'))
+except FileNotFoundError:
+    print('\nData could not be read. It may not exist yet. Please run calc_cop.py first.\n')
 
+# Get original and resampled data
+try:
+    validation_data = pd.read_csv(os.path.join(path_preprocessed_data, 'original', 'data_original.csv'))
+    validation_data_resampled = pd.read_csv(os.path.join(path_preprocessed_data, 'resampled', 'data_resampled.csv'))
+except FileNotFoundError:
+    print('\nData could not be read. It may not exist yet. Please run calc_cop.py first.\n')
+
+# Convert 'Time' to datetime
 validation_data['Time'] = validation_data['Time'].apply(lambda x: ':'.join(x.split(':')[0:-1]))
 validation_data['Time'] = pd.to_datetime(validation_data['Time'])
-
 validation_data_resampled['Time'] = validation_data_resampled['Time'].apply(lambda x: ':'.join(x.split(':')[0:-1]))
 validation_data_resampled['Time'] = pd.to_datetime(validation_data_resampled['Time'])
 
@@ -45,6 +56,8 @@ temphub_value_resampled = temphub(t_high_series=validation_data_resampled['T_air
                                   t_low_series=validation_data_resampled['T_ext'])
 
 
+# Get 'COP' of original and sampled data
+validation_series = validation_data['COP']
 validation_series_resampled = validation_data_resampled['COP']
 
 
