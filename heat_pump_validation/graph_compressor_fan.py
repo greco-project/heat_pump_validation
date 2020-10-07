@@ -2,10 +2,11 @@ import pandas as pd
 import matplotlib.pyplot as plt
 from pandas.plotting import register_matplotlib_converters
 register_matplotlib_converters()
-tempcontrol = pd.read_csv(
-    r'\\fs01\RL-Institut\04_Projekte\220_GRECO\03-Projektinhalte\AP4_High_Penetration_of_Photovoltaics\T4_4_PV_heat_pumps\Data\UPM\csv\20190304_MPPT_HEATING_TempControl.csv')
-datalogger = pd.read_csv(r'\\fs01\RL-Institut\04_Projekte\220_GRECO\03-Projektinhalte\AP4_High_Penetration_of_Photovoltaics\T4_4_PV_heat_pumps\Data\UPM\csv\20190304_MPPT_HEATING_Datalogger.csv')
 
+# Set paths
+path_file = os.path.dirname(__file__)
+path = os.path.abspath(os.path.join(path_file, os.pardir))
+data_path = os.path.join(path, 'raw_data')
 datalogger['Time'] = datalogger['Time'].apply(lambda x: ':'.join(x.split(':')[0:-1]))
 datalogger['Time'] = pd.to_datetime(datalogger['Time'])
 time = datalogger['Time']
@@ -28,7 +29,7 @@ plt.plot(concat['Time'],concat['Fan_int '], color='r')
 plt.plot(concat['Time'],concat['temp_diff_2'], color='b')
 plt.plot(concat['Time'],concat['P_AC'], color='g')
 plt.legend(('integral fan', 'T_int-T_out', 'Compressor'))
-plt.savefig(r'\\fs01\RL-Institut\04_Projekte\220_GRECO\03-Projektinhalte\AP4_High_Penetration_of_Photovoltaics\T4_4_PV_heat_pumps\Validierung\PV_HeatPump_HEATING\20190304_HEATING_Figure_PAC_v1.png')
+#plt.savefig(r'\\fs01\RL-Institut\04_Projekte\220_GRECO\03-Projektinhalte\AP4_High_Penetration_of_Photovoltaics\T4_4_PV_heat_pumps\Validierung\PV_HeatPump_HEATING\20190304_HEATING_Figure_PAC_v1.png')
 plt.close()
 
 

@@ -2,6 +2,10 @@ import pandas as pd
 import matplotlib.pyplot as plt
 from sklearn.linear_model import LinearRegression
 
+# Set paths
+path_file = os.path.dirname(__file__)
+path_preprocessed_data = os.path.abspath(os.path.join(path_file, os.pardir, os.pardir,
+                                                      'results', 'chiller'))
 
 def plt_linear_regression(simulation_data, validation_series):
     r"""
@@ -26,18 +30,18 @@ def plt_linear_regression(simulation_data, validation_series):
         plt.xlabel('EER QG 0,{}'.format(sim_name.split('_')[1]))
         plt.ylabel('EER')
         plt.plot([0, 12], [0, 12], color='red')
-        plt.savefig(r'C:\git\data\PV_Chiller_COOLING\Correlation_{}.png'.format(sim_name))
+        if mode == 'data_resampled':
         plt.show()
 
     return linear_regressor
 
 
-data = pd.read_csv(
-    r'\\fs01\RL-Institut\04_Projekte\220_GRECO\03-Projektinhalte\AP4_High_Penetration_of_Photovoltaics\T4_4_PV_heat_pumps\Validierung\PV_Chiller_COOLING\temperature_resampled\graph_data\calc_eer_all_Tint_OUT.csv',
-    parse_dates=True, index_col=0).join(
-    pd.read_csv(
-        r'\\fs01\RL-Institut\04_Projekte\220_GRECO\03-Projektinhalte\AP4_High_Penetration_of_Photovoltaics\T4_4_PV_heat_pumps\Validierung\PV_Chiller_COOLING\temperature_resampled\graph_data\COOLING_temp_re.csv',
-        parse_dates=True, index_col=0))
+##################################################################
+# Choose what data you want to examine:
+# 1. data_original -> original data
+# 2. data_resampled -> resampled data
+data = 'data_original'
+##################################################################
 
 
 validation_series = data['EER']

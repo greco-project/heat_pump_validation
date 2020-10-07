@@ -24,11 +24,13 @@ def temphub(t_high_series, t_low_series):
     return temphub_series
 
 
-datalogger = pd.read_csv(r'file:///C:\git\data\PV_HeatPump_HEATING\01_04_032019\calc_COP_original.csv')
-datalogger_resampled = pd.read_csv(r'file:///C:\git\data\PV_HeatPump_HEATING\01_04_032019\resampled\calc_COP_all_resampled.csv')
+# Set paths
+path_file = os.path.dirname(__file__)
+path_preprocessed_data = os.path.abspath(os.path.join(path_file, os.pardir, os.pardir,
+                                                      'results', 'heat_pump'))
 
-validation_data = pd.read_csv(r'file:///C:\git\data\PV_HeatPump_HEATING\01_04_032019\data_original.csv')
-validation_data_resampled = pd.read_csv(r'file:///C:\git\data\PV_HeatPump_HEATING\01_04_032019\resampled\data_resampled.csv')
+# Get COP calculations
+try:
 
 validation_data['Time'] = validation_data['Time'].apply(lambda x: ':'.join(x.split(':')[0:-1]))
 validation_data['Time'] = pd.to_datetime(validation_data['Time'])
@@ -47,4 +49,4 @@ final_data_resampled = pd.concat([datalogger_resampled,
                                   temphub_resampled, validation_series_resampled], axis=1,
                                  names=['Time', 'COP']).set_index('Time')
 
-final_data_resampled.to_csv(r'C:\git\data\PV_HeatPump_HEATING\01_04_032019\resampled\final_data_resampled.csv')
+# Print data

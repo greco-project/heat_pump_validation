@@ -2,6 +2,10 @@ import pandas as pd
 import matplotlib.pyplot as plt
 from sklearn.linear_model import LinearRegression
 
+# Set paths
+path_file = os.path.dirname(__file__)
+path_preprocessed_data = os.path.abspath(os.path.join(path_file, os.pardir, os.pardir,
+                                                      'results', 'heat_pump'))
 
 def plt_linear_regression(simulation_data, validation_series):
     r"""
@@ -26,7 +30,7 @@ def plt_linear_regression(simulation_data, validation_series):
         plt.xlabel('COP QG 0,{}'.format(sim_name.split('_')[1]))
         plt.ylabel('COP')
         plt.plot([0, 12], [0, 12], color='red')
-        plt.savefig(r'C:\git\data\PV_HeatPump_HEATING\01_04_032019\Correlation_{}.png'.format(sim_name))
+        if mode == 'data_resampled':
         plt.close()
 
     return linear_regressor

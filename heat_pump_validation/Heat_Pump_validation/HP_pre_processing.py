@@ -10,11 +10,15 @@ compressor shuts down, leading to small or negative differences
 
  """
 
-datalogger = pd.read_csv(r'\\SRV02\RL-Institut\04_Projekte\220_GRECO\03-Projektinhalte\AP4_High_Penetration_of_Photovoltaics\T4_4_PV_heat_pumps\Data\UPM\csv\20190301_MPPT_HEATING_Datalogger.csv',
-                         encoding='unicode_escape', low_memory=False)
-tempcontrol = pd.read_csv(r'\\SRV02\RL-Institut\04_Projekte\220_GRECO\03-Projektinhalte\AP4_High_Penetration_of_Photovoltaics\T4_4_PV_heat_pumps\Data\UPM\csv\20190301_MPPT_HEATING_TempControl.csv',
-                          encoding='unicode_escape', low_memory=False)
+# Choose the date written in the file name you want to examine
+dates = np.array(['20190301', '20190304'])
 
+
+    # Set paths
+    path_file = os.path.dirname(__file__)
+    path_raw_data = os.path.abspath(os.path.join(path_file, os.pardir, os.pardir, 'raw_data'))
+    path_preprocessed_data = os.path.abspath(os.path.join(path_file, os.pardir, os.pardir,
+                                                          'results', 'heat_pump', 'original'))
 datalogger['Time'] = datalogger['Time'].apply(lambda x: ':'.join(x.split(':')[0:-1]))
 datalogger['Time'] = pd.to_datetime(datalogger['Time'])
 list_temp_high = datalogger['T_air'].values.tolist()

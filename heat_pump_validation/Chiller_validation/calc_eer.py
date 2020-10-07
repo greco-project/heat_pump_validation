@@ -11,8 +11,12 @@ oemof.solph.transformer.
 import oemof.thermal.compression_heatpumps_and_chillers as cmpr_hp_chiller
 import pandas as pd
 
+# Set paths
+path_file = os.path.dirname(__file__)
+path_preprocessed_data = os.path.abspath(os.path.join(path_file, os.pardir, os.pardir,
+                                                      'results', 'chiller'))
 
-datalogger_resampled= pd.read_csv(r'file:///C:\git\data\PV_Chiller_COOLING\COOLING_temp_re.csv')
+# Read data original and resampled from 11.07.2019 and 12.07.2019
 
 
 temp_high = datalogger_resampled['T_ext_IN ']
@@ -27,7 +31,7 @@ cops_chiller = cmpr_hp_chiller.calc_cops(temp_high= temp_high,
 dataseries = pd.DataFrame(cops_chiller)
 
 
-dataseries.to_csv(r'C:\git\data\PV_Chiller_COOLING\COP\EER_4.csv', decimal='.')
+    print('\nEnergy Efficiency Ratio (EER) with quality grade ' + str(np.round(quality_grade, 2)) + ':')
 
 # print("")
 # print("Coefficients of Performance (COP): ", *cops_chiller, sep='\n')
