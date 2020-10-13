@@ -16,7 +16,7 @@ def fix_param_name(data, name):
     try:
         data.rename(columns={name + ' ': name}, inplace=True)
     except KeyError:
-        print('Value ' + name + ' not in table. Please check.')
+        raise KeyError('Value ' + name + ' not in table. Please check.')
 
 
 def preprocess_chiller_data(date_string):
@@ -27,7 +27,7 @@ def preprocess_chiller_data(date_string):
                                                           'results', 'chiller'))
 
     datalogger = pd.read_csv(os.path.join(path_raw_data, date_string + '_MPPT_COOLING_Datalogger.csv'))
-    tempcontrol = pd.read_csv(os.path.join(path_raw_data, date_string + '_MPPT_COOLING_TempControl.csv'))
+    tempcontrol = pd.read_csv(os.path.join(path_raw_data, date_string + '_MPPT_COOLING_Tempcontrol.csv'))
 
     datalogger['Time'] = datalogger['Time'].apply(lambda x: ':'.join(x.split(':')[0:-1]))
     datalogger['Time'] = pd.to_datetime(datalogger['Time'])

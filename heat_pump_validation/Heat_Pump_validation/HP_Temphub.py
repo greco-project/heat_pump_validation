@@ -35,14 +35,14 @@ try:
     datalogger = pd.read_csv(os.path.join(path_preprocessed_data, 'original', 'calc_COP_original.csv'))
     datalogger_resampled = pd.read_csv(os.path.join(path_preprocessed_data, 'resampled', 'calc_COP_all_resampled.csv'))
 except FileNotFoundError:
-    print('\nData could not be read. It may not exist yet. Please run calc_cop.py first.\n')
+    raise FileNotFoundError('\nData could not be read. It may not exist yet. Please run calc_cop.py first.\n')
 
 # Get original and resampled data
 try:
     validation_data = pd.read_csv(os.path.join(path_preprocessed_data, 'original', 'data_original.csv'))
     validation_data_resampled = pd.read_csv(os.path.join(path_preprocessed_data, 'resampled', 'data_resampled.csv'))
 except FileNotFoundError:
-    print('\nData could not be read. It may not exist yet. Please run calc_cop.py first.\n')
+    raise FileNotFoundError('\nData could not be read. It may not exist yet. Please run calc_cop.py first.\n')
 
 # Convert 'Time' to datetime
 validation_data['Time'] = validation_data['Time'].apply(lambda x: ':'.join(x.split(':')[0:-1]))

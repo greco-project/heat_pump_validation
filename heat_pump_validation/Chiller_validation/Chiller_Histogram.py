@@ -59,7 +59,7 @@ if data == 'data_resampled':
     try:
         data_original = pd.read_csv(os.path.join(path_preprocessed_data, 'original', 'Residuals.csv'))
     except FileNotFoundError:
-        print('\nData could not be read. It may not exist yet. Please run Chiller_Residuals.py first.\n')
+        raise FileNotFoundError('\nData could not be read. It may not exist yet. Please run Chiller_Residuals.py first.\n')
     # Plot histogram for original data
     plt_hist(data_original,
              bins=np.arange(-10, 10, 0.5),
@@ -71,7 +71,7 @@ elif data == 'data_resampled':
     try:
         data_resampled = pd.read_csv(os.path.join(path_preprocessed_data, 'resampled', 'Residuals_resampled.csv'))
     except FileNotFoundError:
-        print('\nData could not be read. It may not exist yet. Please run Chiller_Residuals.py first.\n')
+        raise FileNotFoundError('\nData could not be read. It may not exist yet. Please run Chiller_Residuals.py first.\n')
     # Plot histogram for sampled data
     plt_hist(data_resampled,
              bins=np.arange(-6, 6, 0.1),
