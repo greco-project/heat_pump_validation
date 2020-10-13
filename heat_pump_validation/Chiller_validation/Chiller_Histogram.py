@@ -54,7 +54,7 @@ def plt_hist(residual_data, bins, mode):
 data = 'data_original'
 ##################################################################
 
-if data == 'data_original':
+if data == 'data_resampled':
     # Read data
     try:
         data_original = pd.read_csv(os.path.join(path_preprocessed_data, 'original', 'Residuals.csv'))
