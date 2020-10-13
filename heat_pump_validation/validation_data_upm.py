@@ -3,6 +3,10 @@ import numpy as np
 import os
 import matplotlib.pyplot as plt
 
+# Set path
+path_data = '/Volumes/MARIE_RLI/Validation/Chiller_raw_data'
+
+
 def read_heat_pump_data(path, date, mode='COOLING'):
     r"""
 
@@ -40,10 +44,7 @@ def read_heat_pump_data(path, date, mode='COOLING'):
 
 
 if __name__ == "__main__":
-    path = os.path.join(
-        os.path.expanduser('~'),
-        'C:\git\data')
-    data = read_heat_pump_data(path=path, date='20190712', mode='COOLING')
+    data = read_heat_pump_data(path=path_data, date='20190712', mode='COOLING')
     data['T_ext_IN'].dropna().plot(legend=True)
     data['P_thermal_int (W)'].dropna().plot(legend=True)
     plt.show()
