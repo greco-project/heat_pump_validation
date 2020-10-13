@@ -43,7 +43,7 @@ def plt_hist(residual_data, bins, mode):
             plt.savefig(os.path.join(path_preprocessed_data, 'original', 'figures',
                                      'Histogram_QG_{}.png'.format(column.split('_')[1])))
         #plt.close()
-        plt.show()
+        # plt.show()
     return res_list
 
 

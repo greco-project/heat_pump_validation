@@ -83,7 +83,7 @@ def plt_res_validation(residual_data, validation_series, mode):
         elif mode == 'data_original':
             plt.savefig(os.path.join(path_preprocessed_data, 'original', 'figures',
                                      'validation_series_marker_+_{}_v2.png'.format(res_name.split('_')[1])))
-        plt.show()
+        # plt.show()
         #plt.close()
 
 
@@ -127,7 +127,7 @@ def plt_res_temphub(residual_data, temphub, mode):
         elif mode == 'data_resampled':
             plt.savefig(os.path.join(path_preprocessed_data, 'resampled', 'figures',
                                      'temphub_marker_o_{}.png'.format(res_name.split('_')[1])))
-        plt.show()
+        # plt.show()
 
     return res_name
 

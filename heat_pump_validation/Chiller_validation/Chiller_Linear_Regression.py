@@ -39,7 +39,7 @@ def plt_linear_regression(simulation_data, validation_series, mode):
         elif mode == 'data_original':
             plt.savefig(os.path.join(path_preprocessed_data, 'original', 'figures',
                                      'Correlation_{}.png'.format(sim_name)))
-        plt.show()
+        # plt.show()
 
     return linear_regressor
 
