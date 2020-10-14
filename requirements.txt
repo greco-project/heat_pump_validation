@@ -1,0 +1,4 @@
+pandas==0.24.2
+matplotlib==3.3.2
+oemof.thermal==0.0.3
+sklearn==0.0
