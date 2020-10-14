@@ -18,7 +18,7 @@ def fix_param_name(data, name, index, new_name):
         data.rename(columns={name + ' ': new_name[index]}, inplace=True)
         data.rename(columns={name: new_name[index]}, inplace=True)
     except KeyError:
-        print('Value ' + name + ' not in table. Please check.')
+        raise KeyError('Value ' + name + ' not in table. Please check.')
 
 
 def preprocess_chiller_data(date_string):

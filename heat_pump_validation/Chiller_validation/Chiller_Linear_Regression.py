@@ -39,7 +39,7 @@ def plt_linear_regression(simulation_data, validation_series, mode):
         elif mode == 'data_original':
             plt.savefig(os.path.join(path_preprocessed_data, 'original', 'figures',
                                      'Correlation_{}.png'.format(sim_name)))
-        plt.show()
+        # plt.show()
 
     return linear_regressor
 
@@ -58,7 +58,7 @@ if data == 'data_original':
         datalogger_2 = pd.read_csv(os.path.join(path_preprocessed_data, 'original', '20190712_COOLING_temp.csv'),
                                    parse_dates=True, index_col=0)
     except FileNotFoundError:
-        print('\nData could not be read. It may not exist yet. Please run Chiller_pre_processing_SP18.py first.\n')
+        raise FileNotFoundError('\nData could not be read. It may not exist yet. Please run Chiller_pre_processing_SP18.py first.\n')
 
     try:
         datalogger_3 = pd.read_csv(os.path.join(path_preprocessed_data, 'original', '20190115_COOLING_temp.csv'),
@@ -66,14 +66,14 @@ if data == 'data_original':
         datalogger_4 = pd.read_csv(os.path.join(path_preprocessed_data, 'original', '20190120_COOLING_temp.csv'),
                                    parse_dates=True, index_col=0)
     except FileNotFoundError:
-        print('\nData could not be read. It may not exist yet. Please run Chiller_pre_processing_MPPT.py first.\n')
+        raise FileNotFoundError('\nData could not be read. It may not exist yet. Please run Chiller_pre_processing_MPPT.py first.\n')
 
     EER = pd.concat([datalogger_1, datalogger_2, datalogger_3, datalogger_4])
     try:
         datalogger = pd.read_csv(os.path.join(path_preprocessed_data, 'original', 'calc_eer_all_Tint_OUT.csv'),
                                  parse_dates=True, index_col=0)
     except FileNotFoundError:
-        print('\nData could not be read. It may not exist yet. Please run calc_eer.py first.\n')
+        raise FileNotFoundError('\nData could not be read. It may not exist yet. Please run calc_eer.py first.\n')
 
 elif data == 'data_resampled':
     try:
@@ -82,7 +82,7 @@ elif data == 'data_resampled':
         datalogger_2 = pd.read_csv(os.path.join(path_preprocessed_data, 'resampled', '20190712_COOLING_temp_re.csv'),
                                    parse_dates=True, index_col=0)
     except FileNotFoundError:
-        print('\nData could not be read. It may not exist yet. Please run Chiller_pre_processing_SP18.py first.\n')
+        raise FileNotFoundError('\nData could not be read. It may not exist yet. Please run Chiller_pre_processing_SP18.py first.\n')
 
     try:
         datalogger_3 = pd.read_csv(os.path.join(path_preprocessed_data, 'resampled', '20190115_COOLING_temp_re.csv'),
@@ -90,14 +90,14 @@ elif data == 'data_resampled':
         datalogger_4 = pd.read_csv(os.path.join(path_preprocessed_data, 'resampled', '20190120_COOLING_temp_re.csv'),
                                    parse_dates=True, index_col=0)
     except FileNotFoundError:
-        print('\nData could not be read. It may not exist yet. Please run Chiller_pre_processing_MPPT.py first.\n')
+        raise FileNotFoundError('\nData could not be read. It may not exist yet. Please run Chiller_pre_processing_MPPT.py first.\n')
 
     EER = pd.concat([datalogger_1, datalogger_2, datalogger_3, datalogger_4])
     try:
         datalogger = pd.read_csv(os.path.join(path_preprocessed_data, 'resampled', 'calc_eer_all_Tint_OUT_re.csv'),
                                  parse_dates=True, index_col=0)
     except FileNotFoundError:
-        print('\nData could not be read. It may not exist yet. Please run calc_eer.py first.\n')
+        raise FileNotFoundError('\nData could not be read. It may not exist yet. Please run calc_eer.py first.\n')
 
 # Set Time as index and join data of calculated EER and original EER
 datalogger['Time'] = EER.index

@@ -24,7 +24,7 @@ def fix_param_name(data, name):
     try:
         data.rename(columns={name + ' ': name}, inplace=True)
     except KeyError:
-        print('Value ' + name + ' not in table. Please check.')
+        raise KeyError('Value ' + name + ' not in table. Please check.')
 
 
 def preprocess_heat_pump_data(date_string):
@@ -38,7 +38,7 @@ def preprocess_heat_pump_data(date_string):
     datalogger = pd.read_csv(os.path.join(path_raw_data, date_string + '_MPPT_HEATING_Datalogger.csv'),
                              low_memory=False)
     # Read original data of tempcontrol
-    tempcontrol = pd.read_csv(os.path.join(path_raw_data, date_string + '_MPPT_HEATING_TempControl.csv'),
+    tempcontrol = pd.read_csv(os.path.join(path_raw_data, date_string + '_MPPT_HEATING_Tempcontrol.csv'),
                               low_memory=False)
 
     # Adjust parameter naming for the parameters needed in this file

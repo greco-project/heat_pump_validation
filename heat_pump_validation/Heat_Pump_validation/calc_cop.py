@@ -23,7 +23,7 @@ try:
     datalogger_1 = pd.read_csv(os.path.join(path_preprocessed_data, 'original', '20190304_temp_diff_all.csv'),
                                parse_dates=True, index_col=0)
 except FileNotFoundError:
-    print('\nData could not be read. It may not exist yet. Please run HP_pre_processing.py first.\n')
+    raise FileNotFoundError('\nData could not be read. It may not exist yet. Please run HP_pre_processing.py first.\n')
 
 # Resampled data is the mean over an hour of original data
 data_resample_1 = datalogger_1.resample('H').mean()
@@ -33,7 +33,7 @@ try:
     datalogger_2 = pd.read_csv(os.path.join(path_preprocessed_data, 'original', '20190301_temp_diff_all.csv'),
                                parse_dates=True, index_col=0)
 except FileNotFoundError:
-    print('\nData could not be read. It may not exist yet. Please run HP_pre_processing.py first.\n')
+    raise FileNotFoundError('\nData could not be read. It may not exist yet. Please run HP_pre_processing.py first.\n')
 
 # Resampled data is the mean over an hour of original data
 data_resample_2 = datalogger_2.resample('H').mean()

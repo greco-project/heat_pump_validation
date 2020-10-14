@@ -83,7 +83,7 @@ def plt_res_validation(residual_data, validation_series, mode):
         elif mode == 'data_original':
             plt.savefig(os.path.join(path_preprocessed_data, 'original', 'figures',
                                      'validation_series_marker_+_{}_v2.png'.format(res_name.split('_')[1])))
-        plt.show()
+        # plt.show()
         #plt.close()
 
 
@@ -127,7 +127,7 @@ def plt_res_temphub(residual_data, temphub, mode):
         elif mode == 'data_resampled':
             plt.savefig(os.path.join(path_preprocessed_data, 'resampled', 'figures',
                                      'temphub_marker_o_{}.png'.format(res_name.split('_')[1])))
-        plt.show()
+        # plt.show()
 
     return res_name
 
@@ -144,7 +144,7 @@ if data == 'data_original':
     try:
         data_original = pd.read_csv(os.path.join(path_preprocessed_data, 'original', 'final_data.csv'))
     except FileNotFoundError:
-        print('\nData could not be read. It may not exist yet. Please run Chiller_Temphub.py first.\n')
+        raise FileNotFoundError('\nData could not be read. It may not exist yet. Please run Chiller_Temphub.py first.\n')
     # Plot linear regression for original data
     validation_series = data_original['EER']
     simulation_data = data_original.iloc[:, 1:11]
@@ -161,7 +161,7 @@ elif data == 'data_resampled':
     try:
         data_resampled = pd.read_csv(os.path.join(path_preprocessed_data, 'resampled', 'final_data_resampled.csv'))
     except FileNotFoundError:
-        print('\nData could not be read. It may not exist yet. Please run Chiller_Temphub.py first.\n')
+        raise FileNotFoundError('\nData could not be read. It may not exist yet. Please run Chiller_Temphub.py first.\n')
     # Plot linear regression for sampled data
     validation_resampled_series = data_resampled['EER']
     simulation_resampled_data = data_resampled.iloc[:, 1:11]
